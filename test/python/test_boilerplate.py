@@ -14,10 +14,10 @@ class BoilerplateTests(ExchangeTestRunner):
     valid_destination_memo_1 = ""
     valid_destination_2 = "0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae"
     valid_destination_memo_2 = ""
-    valid_refund = "fd2095a37e72be2cd575d18fe8f16e78c51eafa3"
+    valid_refund = "FD2095A37E72BE2CD575D18FE8F16E78C51EAFA3"
     valid_refund_memo = ""
-    valid_send_amount_1 = 1234560000000000000000000000
-    valid_send_amount_2 = 500000000000000000000000
+    valid_send_amount_1 = 1000
+    valid_send_amount_2 = 666
     valid_fees_1 = 0
     valid_fees_2 = 0
     fake_refund = "abcdabcd"
