@@ -1,18 +1,20 @@
 import pytest
-from .apps.exchange_test_runner import ExchangeTestRunner, ALL_TESTS_EXCEPT_MEMO_AND_FEES, ALL_TESTS_EXCEPT_MEMO_THORSWAP_AND_FEES
+from .apps.exchange_test_runner import ExchangeTestRunner, ALL_TESTS_EXCEPT_MEMO_THORSWAP_AND_FEES
 from .apps import cal as cal
 
-from .apps.boilerplate import BoilerplateClient, BoilerplateErrors
+from .apps.boilerplate import BOL_PATH
+from .apps.boilerplate_application_client.boilerplate_command_sender import BoilerplateCommandSender, Errors as BoilerplateErrors
+from .apps.boilerplate_application_client.boilerplate_transaction import Transaction 
 
 # ExchangeTestRunner implementation for Near
 class BoilerplateTests(ExchangeTestRunner):
 
     currency_configuration = cal.BOL_CURRENCY_CONFIGURATION
-    valid_destination_1 = "speculos.testnet"
+    valid_destination_1 = "0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae"
     valid_destination_memo_1 = ""
-    valid_destination_2 = "ledger.testnet"
+    valid_destination_2 = "0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae"
     valid_destination_memo_2 = ""
-    valid_refund = "c4f5941e81e071c2fd1dae2e71fd3d859d462484391d9a90bf219211dcbb320f"
+    valid_refund = "fd2095a37e72be2cd575d18fe8f16e78c51eafa3"
     valid_refund_memo = ""
     valid_send_amount_1 = 1234560000000000000000000000
     valid_send_amount_2 = 500000000000000000000000
@@ -22,12 +24,18 @@ class BoilerplateTests(ExchangeTestRunner):
     fake_refund_memo = "bla"
     fake_payout = "abcdabcd"
     fake_payout_memo = "bla"
-    signature_refusal_error_code = BoilerplateErrors.SW_SWAP_CHECKING_FAIL
+    signature_refusal_error_code = BoilerplateErrors.SW_DENY
 
     def perform_final_tx(self, destination, send_amount, fees, memo):
-        BoilerplateClient(self.backend).send_simple_sign_tx(path="m/44'/397'/0'/0'/1'",
-                                                    destination=destination,
-                                                    send_amount=send_amount)
+        # Create the transaction that will be sent to the device for signing
+        tx = Transaction(
+            nonce=1,
+            to=destination,
+            value=send_amount,
+            memo=memo
+        ).serialize()
+
+        BoilerplateCommandSender(self.backend).sign_tx(self, path=BOL_PATH, transaction=tx)
 
         # TODO : assert signature validity
 
