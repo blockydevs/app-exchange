@@ -29,6 +29,7 @@ configuration.OPTIONAL.SIDELOADED_APPS = {
     "cardano": "Cardano ADA",
     "near": "NEAR",
     "sui": "Sui",
+    "boilerplate": "Boilerplate"
 }
 
 configuration.OPTIONAL.SIDELOADED_APPS_DIR = "test/python/lib_binaries/"
