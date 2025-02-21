@@ -98,8 +98,8 @@ class BoilerplateCommandSender:
             yield response
 
 
-    @contextmanager
-    def sign_tx(self, path: str, transaction: bytes) -> Generator[None, None, None]:
+    def sign_tx(self, path: str, transaction: bytes) -> RAPDU:
+
         self.backend.exchange(cla=CLA,
                               ins=InsType.SIGN_TX,
                               p1=P1.P1_START,
@@ -116,12 +116,11 @@ class BoilerplateCommandSender:
                                   data=msg)
             idx += 1
 
-        with self.backend.exchange_async(cla=CLA,
-                                         ins=InsType.SIGN_TX,
-                                         p1=idx,
-                                         p2=P2.P2_LAST,
-                                         data=messages[-1]) as response:
-            yield response
+        return self.backend.exchange(cla=CLA,
+                                     ins=InsType.SIGN_TX,
+                                     p1=idx,
+                                     p2=P2.P2_LAST,
+                                     data=messages[-1])
 
     def get_async_response(self) -> Optional[RAPDU]:
         return self.backend.last_async_response
