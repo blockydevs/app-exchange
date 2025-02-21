@@ -35,7 +35,7 @@ class BoilerplateTests(ExchangeTestRunner):
             memo=memo
         ).serialize()
 
-        BoilerplateCommandSender(self.backend).sign_tx(self, path=BOL_PATH, transaction=tx)
+        BoilerplateCommandSender(self.backend).sign_tx(path=BOL_PATH, transaction=tx)
 
         # TODO : assert signature validity
 
