@@ -15,7 +15,7 @@ class Transaction:
                  value: int,
                  memo: str) -> None:
         self.nonce: int = nonce
-        self.to: bytes = bytes.fromhex(to[2:]) if isinstance(to, str) else to
+        self.to: bytes = bytes.fromhex(to) if isinstance(to, str) else to
         self.value: int = value
         self.memo: bytes = memo.encode("ascii")
 
