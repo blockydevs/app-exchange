@@ -20,7 +20,7 @@ from .solana_utils import SOL_USDC_PACKED_DERIVATION_PATH, SOL_USDC_CONF
 from .xrp import XRP_PACKED_DERIVATION_PATH, XRP_CONF
 from .tezos import XTZ_PACKED_DERIVATION_PATH, XTZ_CONF
 from .polkadot import DOT_PACKED_DERIVATION_PATH, DOT_CONF
-from .ton import TON_PACKED_DERIVATION_PATH, TON_CONF
+from .ton import TON_PACKED_DERIVATION_PATH, TON_CONF, TON_USDTON_CONF
 from .tron import TRX_PACKED_DERIVATION_PATH, TRX_CONF
 from .tron import TRX_USDT_CONF, TRX_USDC_CONF, TRX_TUSD_CONF, TRX_USDD_CONF
 from .cosmos import COSMOS_PACKED_DERIVATION_PATH, COSMOS_CONF
@@ -55,7 +55,7 @@ BNB_LEGACY_CURRENCY_CONFIGURATION = CurrencyConfiguration(ticker="BNB", conf=BSC
 DAI_CURRENCY_CONFIGURATION = CurrencyConfiguration(ticker="DAI", conf=DAI_CONF, packed_derivation_path=DAI_PACKED_DERIVATION_PATH)
 DOT_CURRENCY_CONFIGURATION = CurrencyConfiguration(ticker="DOT", conf=DOT_CONF, packed_derivation_path=DOT_PACKED_DERIVATION_PATH)
 TON_CURRENCY_CONFIGURATION = CurrencyConfiguration(ticker="TON", conf=TON_CONF, packed_derivation_path=TON_PACKED_DERIVATION_PATH)
-TON_USDT_CURRENCY_CONFIGURATION = CurrencyConfiguration(ticker="TON", conf=TON_CONF, packed_derivation_path=TON_PACKED_DERIVATION_PATH)
+TON_USDT_CURRENCY_CONFIGURATION = CurrencyConfiguration(ticker="USDT", conf=TON_USDTON_CONF, packed_derivation_path=TON_PACKED_DERIVATION_PATH)
 TRX_CURRENCY_CONFIGURATION = CurrencyConfiguration(ticker="TRX", conf=TRX_CONF, packed_derivation_path=TRX_PACKED_DERIVATION_PATH)
 USDT_CURRENCY_CONFIGURATION = CurrencyConfiguration(ticker="USDT", conf=TRX_USDT_CONF, packed_derivation_path=TRX_PACKED_DERIVATION_PATH)
 USDC_CURRENCY_CONFIGURATION = CurrencyConfiguration(ticker="USDC", conf=TRX_USDC_CONF, packed_derivation_path=TRX_PACKED_DERIVATION_PATH)
@@ -74,5 +74,3 @@ def sign_currency_conf(currency_conf: bytes, overload_signer: Optional[SigningAu
         signer = LEDGER_SIGNER
 
     return signer.sign(currency_conf)
-
-
