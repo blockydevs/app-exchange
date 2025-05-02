@@ -7,6 +7,7 @@
 int parse_check_address_message(const command_t *cmd,
                                 buf_t *config,
                                 buf_t *der,
-                                buf_t *address_parameters);
+                                buf_t *address_parameters,
+                                buf_t *pubkey_to_check);
 
 #endif

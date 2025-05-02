@@ -236,6 +236,8 @@ This command is used for SELL based and FUND based TYPES.
 | S bytes | Signature of the coin configuration by the Ledger key in DER format, curve secp256k1 hashfunc sha256           |
 | 1 byte  | Packed derivation path length T                                                                                |
 | T bytes | Packed derivation path used for the FROM coin                                                                  |
+| 1 byte  | Length Z of address to check                                                                                   |
+| Z bytes | Address to check                                                                                               |
 
 #### CHECK_PAYOUT_ADDRESS
 
@@ -253,6 +255,8 @@ This command is used only in the SWAP_LEGACY and SWAP_NEW TYPES.
 | S bytes | Signature of the coin configuration by the Ledger key in DER format, curve secp256k1 hashfunc sha256         |
 | 1 byte  | Packed derivation path length T                                                                              |
 | T bytes | Packed derivation path used for the TO coin                                                                  |
+| 1 byte  | Length Z of address to check                                                                                   |
+| Z bytes | Address to check                                                                                               |
 
 #### CHECK_REFUND_ADDRESS_AND_DISPLAY
 
@@ -277,6 +281,8 @@ This command is used only in the SWAP_LEGACY and SWAP_NEW TYPES.
 | S bytes | Signature of the coin configuration by the Ledger key in DER format, curve secp256k1 hashfunc sha256           |
 | 1 byte  | Packed derivation path length T                                                                                |
 | T bytes | Packed derivation path used for the FROM coin                                                                  |
+| 1 byte  | Length Z of address to check                                                                                   |
+| Z bytes | Address to check                                                                                               |
 <!-- --8<-- [end:coin_configuration] -->
 
 #### PROMPT_UI_DISPLAY

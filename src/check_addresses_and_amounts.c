@@ -45,31 +45,49 @@ static bool check_received_ticker_matches_context(buf_t ticker, const command_t 
 static uint16_t check_payout_or_refund_address(command_e ins,
                                                buf_t sub_coin_config,
                                                buf_t address_parameters,
+                                               buf_t pubkey_to_check,
                                                char *appname) {
-    uint8_t address_max_size;
-    char *address_to_check;
-    char *extra_id_to_check;
+    uint16_t err = 0;
+    char *addr_to_check = NULL;
+    char *extra_id_to_check = NULL;
+    size_t address_max_size = 0;
 
-    // Depending on the current command, check either PAYOUT or REFUND
+    // Determine address and extra_id based on instruction
     if (ins == CHECK_PAYOUT_ADDRESS) {
-        address_to_check = G_swap_ctx.swap_transaction.payout_address;
+        addr_to_check = G_swap_ctx.swap_transaction.payout_address;
         address_max_size = sizeof(G_swap_ctx.swap_transaction.payout_address);
         extra_id_to_check = G_swap_ctx.swap_transaction.payout_extra_id;
     } else {
-        address_to_check = G_swap_ctx.swap_transaction.refund_address;
+        addr_to_check = G_swap_ctx.swap_transaction.refund_address;
         address_max_size = sizeof(G_swap_ctx.swap_transaction.refund_address);
         extra_id_to_check = G_swap_ctx.swap_transaction.refund_extra_id;
     }
-    if (address_to_check[address_max_size - 1] != '\0') {
-        PRINTF("Address to check is not NULL terminated\n");
-        return INCORRECT_COMMAND_DATA;
-    }
 
-    uint16_t err = check_address(&sub_coin_config,
-                                 &address_parameters,
-                                 appname,
-                                 address_to_check,
-                                 extra_id_to_check);
+    if (pubkey_to_check.size > 0) {
+        // Null-terminate the public key before checking
+        uint8_t address_size = pubkey_to_check.size;
+        if (pubkey_to_check.bytes[address_size - 1] != '\0') {
+            PRINTF("Address to check is not NULL terminated\n");
+            return INCORRECT_COMMAND_DATA;
+        }
+
+        err = check_address(&sub_coin_config,
+                            &address_parameters,
+                            appname,
+                            (char*)pubkey_to_check.bytes,
+                            extra_id_to_check);
+    } else {
+        if (addr_to_check[address_max_size - 1] != '\0') {
+            PRINTF("Address to check is not NULL terminated\n");
+            return INCORRECT_COMMAND_DATA;
+        }
+        err = check_address(&sub_coin_config,
+                            &address_parameters,
+                            appname,
+                            addr_to_check,
+                            extra_id_to_check);
+    }
+    
     if (err != 0) {
         PRINTF("Error: check_address failed\n");
 #ifndef BYPASS_CHECK_ADDRESS
@@ -78,6 +96,7 @@ static uint16_t check_payout_or_refund_address(command_e ins,
         return err;
 #endif
     }
+
     return 0;
 }
 
@@ -183,13 +202,14 @@ int check_addresses_and_amounts(const command_t *cmd) {
     buf_t config;
     buf_t der;
     buf_t address_parameters;
+    buf_t pubkey_to_check;
     buf_t ticker;
     buf_t parsed_application_name;
     buf_t sub_coin_config;
     char application_name[BOLOS_APPNAME_MAX_SIZE_B + 1];
     uint16_t err;
 
-    if (parse_check_address_message(cmd, &config, &der, &address_parameters) == 0) {
+    if (parse_check_address_message(cmd, &config, &der, &address_parameters, &pubkey_to_check) == 0) {
         PRINTF("Error: Can't parse command\n");
         return reply_error(INCORRECT_COMMAND_DATA);
     }
@@ -224,6 +244,7 @@ int check_addresses_and_amounts(const command_t *cmd) {
         uint16_t ret = check_payout_or_refund_address(cmd->ins,
                                                       sub_coin_config,
                                                       address_parameters,
+                                                      pubkey_to_check,
                                                       application_name);
         if (ret != 0) {
             return reply_error(ret);

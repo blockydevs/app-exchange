@@ -33,10 +33,13 @@ static bool parse_der_signature(uint8_t *in, uint16_t in_size, buf_t *der, uint1
 //    C bytes
 // 1 byte length Y of address parameters                1 + X + D
 // Y bytes of address parameters                        2 + X + D
+// 1 byte length Z of address to check                  2 + X + D + 1
+// Z bytes of address to check                          3 + X + D + 1
 int parse_check_address_message(const command_t *cmd,
                                 buf_t *config,
                                 buf_t *der,
-                                buf_t *address_parameters) {
+                                buf_t *address_parameters,
+                                buf_t *pubkey_to_check) {
     uint16_t read = 0;
 
     // Read currency configuration
@@ -67,7 +70,32 @@ int parse_check_address_message(const command_t *cmd,
         PRINTF("Invalid address_parameters size %d\n", address_parameters->size);
         return 0;
     }
+    PRINTF("Address parameters size %d\n", address_parameters->size);
+    PRINTF("There are %d bytes left to read\n", cmd->data.size - read);
 
+
+    if(cmd->data.size - read > 1) {
+        // Read address to check
+        PRINTF("YES - READ ADDRESS TO CHECK\n");
+        if (!parse_to_sized_buffer(cmd->data.bytes, cmd->data.size, 1, pubkey_to_check, &read)) {
+            PRINTF("Cannot read the address to check\n");
+            return 0;
+        }
+        PRINTF("Address to check size %d\n", pubkey_to_check->size);
+    }
+    else
+    {
+        PRINTF("NO - READ ADDRESS TO CHECK\n");
+        pubkey_to_check->size = 0;
+        pubkey_to_check->bytes = NULL;
+
+        // If sent with field "Public key to check" but with len 0
+        if (cmd->data.size - read == 1 && cmd->data.bytes[read] == 0) {
+            read++;
+        }
+    }
+
+   
     // Check that there is nothing else to read
     if (cmd->data.size != read) {
         PRINTF("Bytes to read: %d, bytes read: %d\n", cmd->data.size, read);

@@ -51,12 +51,16 @@ class CurrencyConfiguration:
     conf: bytes
     packed_derivation_path: bytes
 
+    # The public key, not always equal to address
+    # If currency uses a different PK than the address, this field should be set
+    pubkey_to_verify: Optional[bytes] = None
+
     # Get the correct coin configuration, can specify a signer to use instead of the correct ledger test one
     def get_conf_for_ticker(self, overload_signer: Optional[SigningAuthority]=None) -> bytes:
         currency_conf = self.conf
         signed_conf = sign_currency_conf(currency_conf, overload_signer)
         derivation_path = self.packed_derivation_path
-        return prefix_with_len(currency_conf) + signed_conf + prefix_with_len(derivation_path)
+        return prefix_with_len(currency_conf) + signed_conf + prefix_with_len(derivation_path) #+ (prefix_with_len(self.pubkey_to_verify) if self.pubkey_to_verify else prefix_with_len(b""))
 
 # Define a configuration for each currency used in our tests: native coins and tokens
 
@@ -95,7 +99,7 @@ ADA_SHELLEY_CURRENCY_CONFIGURATION = CurrencyConfiguration(ticker="ADA", conf=AD
 NEAR_CURRENCY_CONFIGURATION = CurrencyConfiguration(ticker="NEAR", conf=NEAR_CONF, packed_derivation_path=NEAR_PACKED_DERIVATION_PATH)
 SUI_CURRENCY_CONFIGURATION = CurrencyConfiguration(ticker="SUI", conf=SUI_CONF, packed_derivation_path=SUI_PACKED_DERIVATION_PATH)
 APTOS_CURRENCY_CONFIGURATION = CurrencyConfiguration(ticker="APT", conf=APTOS_CONF, packed_derivation_path=APTOS_PACKED_DERIVATION_PATH)
-HEDERA_CURRENCY_CONFIGURATION = CurrencyConfiguration(ticker="HBAR", conf=HEDERA_CONF, packed_derivation_path=HEDERA_PACKED_DERIVATION_PATH)
+HEDERA_CURRENCY_CONFIGURATION = CurrencyConfiguration(ticker="HBAR", conf=HEDERA_CONF, packed_derivation_path=HEDERA_PACKED_DERIVATION_PATH)#, pubkey_to_verify=b"0x698f0bad5c0c043a5f09cdcbb4c48ddcf6fb2886fa006df26298003fd59dc7c9\0")
 BOL_CURRENCY_CONFIGURATION = CurrencyConfiguration(ticker="BOL", conf=BOL_CONF, packed_derivation_path=BOL_PACKED_DERIVATION_PATH)
 # Helper that can be called from outside if we want to generate errors easily
 def sign_currency_conf(currency_conf: bytes, overload_signer: Optional[SigningAuthority]=None) -> bytes:

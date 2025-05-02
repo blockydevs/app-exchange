@@ -21,24 +21,25 @@ def pytest_configure(config):
     if current_setup == "default":
         # List of sideloaded applications under the format <VARIANT_VALUES>:<APPNAME>
         configuration.OPTIONAL.SIDELOADED_APPS = {
-            "APTOS": "Aptos",
-            "bitcoin": "Bitcoin",
-            "bitcoin_legacy": "Bitcoin Legacy",
+            # "APTOS": "Aptos",
+            # "bitcoin": "Bitcoin",
+            # "bitcoin_legacy": "Bitcoin Legacy",
             "ethereum": "Ethereum",
-            "ethereum_classic": "Ethereum Classic",
-            "tezos": "Tezos Wallet",
-            "xrp": "XRP",
-            "litecoin": "Litecoin",
-            "stellar": "Stellar",
+            # "ethereum_classic": "Ethereum Classic",
+            # "tezos": "Tezos Wallet",
+            # "xrp": "XRP",
+            # "litecoin": "Litecoin",
+            # "stellar": "Stellar",
             "solana": "Solana",
-            "DOT": "Polkadot",
-            "tron": "Tron",
-            "ton": "TON",
-            "ATOM": "Cosmos",
-            "cardano": "Cardano ADA",
-            "near": "NEAR",
-            "sui": "Sui",
-            "boilerplate": "Boilerplate"
+            # "DOT": "Polkadot",
+            # "tron": "Tron",
+            # "ton": "TON",
+            # "ATOM": "Cosmos",
+            # "cardano": "Cardano ADA",
+            # "near": "NEAR",
+            # "sui": "Sui",
+            # "boilerplate": "Boilerplate"
+            "hedera": "Hedera",
         }
 
         configuration.OPTIONAL.SIDELOADED_APPS_DIR = "test/python/lib_binaries/"
