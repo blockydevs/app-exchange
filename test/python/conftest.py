@@ -21,8 +21,8 @@ def pytest_configure(config):
     if current_setup == "default":
         # List of sideloaded applications under the format <VARIANT_VALUES>:<APPNAME>
         configuration.OPTIONAL.SIDELOADED_APPS = {
-            # "APTOS": "Aptos",
-            # "bitcoin": "Bitcoin",
+            "APTOS": "Aptos",
+            "bitcoin": "Bitcoin Test",
             # "bitcoin_legacy": "Bitcoin Legacy",
             "ethereum": "Ethereum",
             # "ethereum_classic": "Ethereum Classic",
@@ -30,7 +30,7 @@ def pytest_configure(config):
             # "xrp": "XRP",
             # "litecoin": "Litecoin",
             # "stellar": "Stellar",
-            "solana": "Solana",
+            #"solana": "Solana",
             # "DOT": "Polkadot",
             # "tron": "Tron",
             # "ton": "TON",
