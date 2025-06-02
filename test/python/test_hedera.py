@@ -3,7 +3,7 @@ from ragger.backend import BackendInterface
 
 from .apps.exchange_test_runner import ExchangeTestRunner, ALL_TESTS_EXCEPT_MEMO_AND_THORSWAP
 from .apps import cal as cal
-from .apps.hedera import HederaClient, PUBLIC_KEY_LENGTH, HEDERA_PUBLIC_KEY
+from .apps.hedera import HederaClient, PUBLIC_KEY_LENGTH, HEDERA_PUBLIC_KEY, HEDERA_PACKED_DERIVATION_PATH
 from .apps.hedera_builder import crypto_transfer_hbar_conf, crypto_create_account_conf, hedera_transaction
 from time import sleep
 from enum import IntEnum
@@ -51,9 +51,6 @@ class HederaTests(ExchangeTestRunner):
             amount=send_amount,
         )
         
-        # Use index 12345 for signing
-        index = 12345
-        
         # The operator parameters for the transaction
         operator_shard_num = 1
         operator_realm_num = 2
@@ -74,11 +71,10 @@ class HederaTests(ExchangeTestRunner):
         )
         
         # Prepare the full payload (index + transaction)
-        transaction_to_sign = index.to_bytes(4, "little") + transaction
+        transaction_to_sign = add_path_length_to_path(HEDERA_PACKED_DERIVATION_PATH) + transaction
         
         # Sign the transaction
         signature = hedera.sign_transaction(
-            index=index,
             operator_shard_num=operator_shard_num,
             operator_realm_num=operator_realm_num,
             operator_account_num=operator_account_num,

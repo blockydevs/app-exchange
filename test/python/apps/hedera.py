@@ -35,7 +35,8 @@ STATUS_OK = 0x9000
 HEDERA_CONF = create_currency_config("HBAR", "Hedera")
 
 HEDERA_PACKED_DERIVATION_PATH      = pack_derivation_path("m/44'/3030'/12345'")
-HEDERA_PACKED_DERIVATION_PATH_2    = pack_derivation_path("m/44'/3030'/0'/0'")
+HEDERA_PACKED_DERIVATION_PATH_2    = pack_derivation_path("m/44'/3030'/0'")
+DERIVATION_PATH_LENGTH = 12
 
 # Public key for verification
 HEDERA_PUBLIC_KEY = "698f0bad5c0c043a5f09cdcbb4c48ddcf6fb2886fa006df26298003fd59dc7c9"
@@ -47,6 +48,8 @@ class ErrorType:
 def to_zigzag(n):
     return n + n + (n < 0)
 
+def add_path_length_to_path(path: bytes) -> bytes:
+    return len(path).to_bytes(1, "little") + path
 
 class HederaClient:
     client: BackendInterface
@@ -55,12 +58,12 @@ class HederaClient:
         self._client = client
 
     def get_public_key_non_confirm(self, index: int) -> RAPDU:
-        index_b = index.to_bytes(4, "little")
+        index_b = add_path_length_to_path(index.to_bytes(4, "little"))
         return self._client.exchange(CLA, INS.INS_GET_PUBLIC_KEY, P1_NON_CONFIRM, 0, index_b)
 
     @contextmanager
     def get_public_key_confirm(self, index: int) -> Generator[None, None, None]:
-        index_b = index.to_bytes(4, "little")
+        index_b = add_path_length_to_path(index.to_bytes(4, "little"))
         with self._client.exchange_async(CLA, INS.INS_GET_PUBLIC_KEY, P1_CONFIRM, 0, index_b):
             sleep(0.5)
             yield
@@ -92,7 +95,7 @@ class HederaClient:
         try:
             verify_key = VerifyKey(public_key)
             # The device receives index+transaction but only signs the transaction part
-            transaction_without_index = transaction[4:] if len(transaction) > 4 else transaction
+            transaction_without_index = transaction[DERIVATION_PATH_LENGTH:]
             verify_key.verify(transaction_without_index, signature)
             print("Signature verification successful!")
             return True
@@ -100,7 +103,6 @@ class HederaClient:
             return False
 
     def sign_transaction(self,
-                         index: int,
                          operator_shard_num: int,
                          operator_realm_num: int,
                          operator_account_num: int,
@@ -130,7 +132,7 @@ class HederaClient:
         )
         
         # Prepare the payload with index
-        payload = index.to_bytes(4, "little") + transaction
+        payload = add_path_length_to_path(HEDERA_PACKED_DERIVATION_PATH) + transaction
         
         # Send to device for signing
         response = self._client.exchange(CLA, INS.INS_SIGN_TRANSACTION, P1_NON_CONFIRM, 0, payload)
@@ -142,7 +144,6 @@ class HederaClient:
 
     @contextmanager
     def send_sign_transaction(self,
-                              index: int,
                               operator_shard_num: int,
                               operator_realm_num: int,
                               operator_account_num: int,
@@ -157,7 +158,7 @@ class HederaClient:
                                          memo,
                                          conf)
 
-        payload = index.to_bytes(4, "little") + transaction
+        payload = add_path_length_to_path(HEDERA_PACKED_DERIVATION_PATH) + transaction
 
         with self._client.exchange_async(CLA, INS.INS_SIGN_TRANSACTION, P1_CONFIRM, 0, payload):
             sleep(0.5)
