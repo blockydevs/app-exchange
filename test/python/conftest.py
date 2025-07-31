@@ -38,8 +38,8 @@ def pytest_configure(config):
             "ton": "TON",
             "ATOM": "Cosmos",
             "cardano": "Cardano ADA",
-            "near": "NEAR",
-            "sui": "Sui",
+            # "near": "NEAR",
+            # "sui": "Sui",
             "boilerplate": "Boilerplate",
             "kaspa": "Kaspa",
             "hedera": "Hedera"
