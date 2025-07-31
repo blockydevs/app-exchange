@@ -9,7 +9,7 @@ on:
         type: string
       repo_for_exchange:
         required: false
-        default: 'LedgerHQ/app-exchange'
+        default: 'blockydevs/app-exchange'
         type: string
 
       branch_for_stellar:
