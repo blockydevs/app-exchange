@@ -9,7 +9,7 @@ on:
         type: string
       repo_for_exchange:
         required: false
-        default: 'LedgerHQ/app-exchange'
+        default: 'blockydevs/app-exchange'
         type: string
 
       branch_for_stellar:
@@ -101,15 +101,6 @@ on:
         default: 'LedgerHQ/app-tron'
         type: string
 
-      branch_for_near:
-        required: false
-        default: 'develop'
-        type: string
-      repo_for_near:
-        required: false
-        default: 'LedgerHQ/app-near'
-        type: string
-
       branch_for_ton:
         required: false
         default: 'develop'
@@ -135,15 +126,6 @@ on:
       repo_for_cosmos:
         required: false
         default: 'LedgerHQ/app-cosmos'
-        type: string
-
-      branch_for_sui:
-        required: false
-        default: 'develop'
-        type: string
-      repo_for_sui:
-        required: false
-        default: 'LedgerHQ/app-sui'
         type: string
 
       branch_for_aptos:
