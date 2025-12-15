@@ -258,10 +258,6 @@ class ExchangeTestRunner:
         # We don't care at all for the subcommand / rate
         ExchangeClient(self.backend, Rate.FIXED, SubCommand.SWAP_NG).assert_exchange_is_started()
 
-    def skip_thorswap_if_needed(self):
-        if self.backend.firmware.device == "nanos":
-            pytest.skip("Thorswap is not implemented on NanoS device")
-
     #########################################################
     # Generic SWAP tests functions, call them in your tests #
     #########################################################
@@ -337,19 +333,16 @@ class ExchangeTestRunner:
     #######################################################################
 
     def perform_test_thorswap_valid_1(self):
-        self.skip_thorswap_if_needed()
         self.perform_valid_thorswap_from_custom(self.valid_destination_1, self.valid_send_amount_1, self.valid_fees_1, self.valid_payin_extra_data_1)
         self.perform_coin_specific_final_tx(self.valid_destination_1, self.valid_send_amount_1, self.valid_fees_1, self.valid_payin_extra_data_1)
         self.assert_exchange_is_started()
 
     def perform_test_thorswap_valid_2(self):
-        self.skip_thorswap_if_needed()
         self.perform_valid_thorswap_from_custom(self.valid_destination_1, self.valid_send_amount_1, self.valid_fees_1, self.valid_payin_extra_data_2)
         self.perform_coin_specific_final_tx(self.valid_destination_1, self.valid_send_amount_1, self.valid_fees_1, self.valid_payin_extra_data_2)
         self.assert_exchange_is_started()
 
     def perform_test_thorswap_wrong_hash(self):
-        self.skip_thorswap_if_needed()
         self.perform_valid_thorswap_from_custom(self.valid_destination_1, self.valid_send_amount_1, self.valid_fees_1, self.valid_payin_extra_data_1)
         with pytest.raises(ExceptionRAPDU) as e:
             self.perform_coin_specific_final_tx(self.valid_destination_1, self.valid_send_amount_1, self.valid_fees_1, self.valid_payin_extra_data_2)
@@ -357,7 +350,6 @@ class ExchangeTestRunner:
         self.assert_exchange_is_started()
 
     def perform_test_thorswap_invalid_type(self):
-        self.skip_thorswap_if_needed()
         self.perform_valid_thorswap_from_custom(self.valid_destination_1, self.valid_send_amount_1, self.valid_fees_1, self.invalid_payin_extra_data)
         with pytest.raises(ExceptionRAPDU) as e:
             self.perform_coin_specific_final_tx(self.valid_destination_1, self.valid_send_amount_1, self.valid_fees_1, self.invalid_payin_extra_data)
@@ -365,7 +357,6 @@ class ExchangeTestRunner:
         self.assert_exchange_is_started()
 
     def perform_test_thorswap_unexpected_extra_data(self):
-        self.skip_thorswap_if_needed()
         self.perform_valid_swap_from_custom(self.valid_destination_1, self.valid_send_amount_1, self.valid_fees_1, "")
         with pytest.raises(ExceptionRAPDU) as e:
             self.perform_coin_specific_final_tx(self.valid_destination_1, self.valid_send_amount_1, self.valid_fees_1, self.valid_payin_extra_data_1)
@@ -373,7 +364,6 @@ class ExchangeTestRunner:
         self.assert_exchange_is_started()
 
     def perform_test_thorswap_missing_extra_data(self):
-        self.skip_thorswap_if_needed()
         self.perform_valid_thorswap_from_custom(self.valid_destination_1, self.valid_send_amount_1, self.valid_fees_1, self.valid_payin_extra_data_1)
         with pytest.raises(ExceptionRAPDU) as e:
             self.perform_coin_specific_final_tx(self.valid_destination_1, self.valid_send_amount_1, self.valid_fees_1, None)

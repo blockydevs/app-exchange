@@ -1,9 +1,7 @@
 import pytest
 import base58
 
-from ragger.bip import pack_derivation_path
 from ragger.backend import BackendInterface
-from ragger.firmware import Firmware
 
 from exchange_client.test_runner import ExchangeTestRunner, ALL_TESTS_EXCEPT_MEMO_AND_THORSWAP
 from exchange_client.navigation_helper import ExchangeNavigationHelper
@@ -78,8 +76,6 @@ class TestsCardanoClient:
     #                        backend: BackendInterface,
     #                        exchange_navigation_helper: ExchangeNavigationHelper,
     #                        test_to_run: str) -> None:
-    #     if backend.firmware == Firmware.NANOS:
-    #         pytest.skip("Cardano swap is not supported on NanoS device")
     #     CardanoByronClientTests(backend, exchange_navigation_helper).run_test(test_to_run)
 
     @pytest.mark.parametrize('test_to_run', ALL_TESTS_EXCEPT_MEMO_AND_THORSWAP)
@@ -87,6 +83,4 @@ class TestsCardanoClient:
                              backend: BackendInterface,
                              exchange_navigation_helper: ExchangeNavigationHelper,
                              test_to_run: str) -> None:
-        if backend.firmware == Firmware.NANOS:
-            pytest.skip("Cardano swap is not supported on NanoS device")
         CardanoShelleyClientTests(backend, exchange_navigation_helper).run_test(test_to_run)

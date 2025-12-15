@@ -150,12 +150,8 @@ class TestsTon:
     # Paremetrize the test_ton function with all the ExchangeTestRunner tests to run
     @pytest.mark.parametrize('test_to_run', ALL_TESTS_EXCEPT_MEMO_THORSWAP_AND_FEES)
     def test_ton(self, backend, exchange_navigation_helper, test_to_run):
-        if backend.firmware.device == "nanos":
-            pytest.skip("Ton swap is not supported on NanoS device")
         TonTests(backend, exchange_navigation_helper).run_test(test_to_run)
 
     @pytest.mark.parametrize('test_to_run', ALL_TESTS_EXCEPT_MEMO_THORSWAP_AND_FEES)
     def test_ton_usdt(self, backend, exchange_navigation_helper, test_to_run):
-        if backend.firmware.device == "nanos":
-            pytest.skip("Ton swap is not supported on NanoS device")
         TonUSDTTests(backend, exchange_navigation_helper).run_test(test_to_run)
