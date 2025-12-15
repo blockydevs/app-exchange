@@ -2,11 +2,11 @@ import pytest
 from ragger.utils import prefix_with_len
 
 from exchange_client.client import ExchangeClient, Rate, SubCommand
-from .apps.litecoin import LitecoinClient
+from apps.litecoin import LitecoinClient
 
 from exchange_client.signing_authority import SigningAuthority, LEDGER_SIGNER
 from exchange_client.transaction_builder import get_partner_curve, craft_and_sign_tx, ALL_SUBCOMMANDS, get_credentials
-from .apps import cal as cal
+from apps import cal as cal
 
 CURRENCY_FROM = cal.LTC_CURRENCY_CONFIGURATION
 CURRENCY_TO = cal.ETH_CURRENCY_CONFIGURATION

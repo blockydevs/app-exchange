@@ -7,9 +7,9 @@ from ragger.firmware import Firmware
 
 from exchange_client.test_runner import ExchangeTestRunner, ALL_TESTS_EXCEPT_MEMO_AND_THORSWAP
 from exchange_client.navigation_helper import ExchangeNavigationHelper
-from .apps.cardano import CardanoClient, Errors
-from .apps.cardano import ADA_BYRON_DERIVATION_PATH, ADA_SHELLEY_DERIVATION_PATH
-from .apps import cal as cal
+from apps.cardano import CardanoClient, Errors
+from apps.cardano import ADA_BYRON_DERIVATION_PATH, ADA_SHELLEY_DERIVATION_PATH
+from apps import cal as cal
 
 
 # ExchangeTestRunner implementation for Cardano

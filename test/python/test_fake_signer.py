@@ -5,7 +5,7 @@ from ragger.error import ExceptionRAPDU
 
 from exchange_client.client import ExchangeClient, Rate, SubCommand, Errors
 from exchange_client.transaction_builder import get_partner_curve, ALL_SUBCOMMANDS, SWAP_SUBCOMMANDS, get_credentials, craft_and_sign_tx
-from .apps import cal as cal
+from apps import cal as cal
 
 from exchange_client.signing_authority import SigningAuthority, LEDGER_SIGNER
 

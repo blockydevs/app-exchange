@@ -5,11 +5,11 @@ from ragger.error import ExceptionRAPDU
 from typing import Optional
 
 from exchange_client.client import ExchangeClient, Rate, SubCommand, Errors
-from .apps.litecoin import LitecoinClient
+from apps.litecoin import LitecoinClient
 
 from exchange_client.signing_authority import SigningAuthority, LEDGER_SIGNER
 from exchange_client.transaction_builder import get_partner_curve, craft_and_sign_tx, ALL_SUBCOMMANDS, get_credentials
-from .apps import cal as cal
+from apps import cal as cal
 
 CURRENCY_FROM = cal.BTC_CURRENCY_CONFIGURATION
 CURRENCY_TO = cal.ETH_CURRENCY_CONFIGURATION

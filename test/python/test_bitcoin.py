@@ -2,8 +2,8 @@ import pytest
 
 from exchange_client.client import PayinExtraDataID
 from exchange_client.test_runner import ExchangeTestRunner, ALL_TESTS_EXCEPT_MEMO
-from .apps.bitcoin import BitcoinClient, BitcoinErrors
-from .apps import cal as cal
+from apps.bitcoin import BitcoinClient, BitcoinErrors
+from apps import cal as cal
 from ledger_bitcoin import WalletPolicy
 from hashlib import sha256
 

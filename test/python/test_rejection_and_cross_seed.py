@@ -7,8 +7,8 @@ from exchange_client.client import ExchangeClient, Rate, SubCommand, Errors, Com
 from exchange_client.transaction_builder import get_partner_curve, LEGACY_SUBCOMMANDS, ALL_SUBCOMMANDS, NEW_SUBCOMMANDS, get_credentials, craft_and_sign_tx
 from exchange_client.signing_authority import SigningAuthority, LEDGER_SIGNER
 from exchange_client.utils import handle_lib_call_start_or_stop
-from .apps import cal as cal
-from .apps.ethereum import ETC_PACKED_DERIVATION_PATH, ETH_PATH
+from apps import cal as cal
+from apps.ethereum import ETC_PACKED_DERIVATION_PATH, ETH_PATH
 from ledger_app_clients.ethereum.client import EthAppClient
 
 CURRENCY_FROM = cal.ETH_CURRENCY_CONFIGURATION

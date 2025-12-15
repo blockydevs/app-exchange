@@ -6,7 +6,7 @@ from ragger.error import ExceptionRAPDU
 from exchange_client.client import ExchangeClient, Rate, SubCommand, Errors
 from exchange_client.transaction_builder import get_partner_curve, ALL_SUBCOMMANDS, get_credentials, craft_and_sign_tx
 from exchange_client.signing_authority import SigningAuthority, LEDGER_SIGNER
-from .apps import cal as cal
+from apps import cal as cal
 
 CURRENCY_FROM = cal.ETH_CURRENCY_CONFIGURATION
 CURRENCY_TO = cal.BTC_CURRENCY_CONFIGURATION

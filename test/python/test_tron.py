@@ -4,8 +4,8 @@ from ragger.error import ExceptionRAPDU
 
 from exchange_client.test_runner import ExchangeTestRunner
 from exchange_client.test_runner import VALID_TESTS_EXCEPT_THORSWAP, ALL_TESTS_EXCEPT_THORSWAP_AND_FEES
-from .apps.tron import TronClient, TronErrors
-from .apps import cal as cal
+from apps.tron import TronClient, TronErrors
+from apps import cal as cal
 
 
 # ExchangeTestRunner implementation for Tron

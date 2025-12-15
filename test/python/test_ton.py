@@ -2,10 +2,10 @@
 import pytest
 import os
 
-from .apps.ton_application_client.ton_transaction import Transaction, SendMode, CommentPayload, Payload, JettonTransferPayload, NFTTransferPayload, CustomUnsafePayload, JettonBurnPayload, AddWhitelistPayload, SingleNominatorWithdrawPayload, ChangeValidatorPayload, TonstakersDepositPayload, JettonDAOVotePayload, ChangeDNSWalletPayload, ChangeDNSPayload, TokenBridgePaySwapPayload
-from .apps.ton_application_client.ton_command_sender import BoilerplateCommandSender, Errors
-from .apps.ton_application_client.ton_response_unpacker import unpack_sign_tx_response
-from .apps.ton_utils import check_signature_validity
+from apps.ton_application_client.ton_transaction import Transaction, SendMode, CommentPayload, Payload, JettonTransferPayload, NFTTransferPayload, CustomUnsafePayload, JettonBurnPayload, AddWhitelistPayload, SingleNominatorWithdrawPayload, ChangeValidatorPayload, TonstakersDepositPayload, JettonDAOVotePayload, ChangeDNSWalletPayload, ChangeDNSPayload, TokenBridgePaySwapPayload
+from apps.ton_application_client.ton_command_sender import BoilerplateCommandSender, Errors
+from apps.ton_application_client.ton_response_unpacker import unpack_sign_tx_response
+from apps.ton_utils import check_signature_validity
 
 # XXX:
 #   tonsdk seems not te be maintained anymore, python package describe by official TON documentation
@@ -14,8 +14,8 @@ from .apps.ton_utils import check_signature_validity
 from pytoniq_core import Address, Cell, begin_cell
 
 from exchange_client.test_runner import ExchangeTestRunner, ALL_TESTS_EXCEPT_MEMO_THORSWAP_AND_FEES
-from .apps.ton import DEVICE_PUBLIC_KEY, Bounceability, WorkchainID, craft_address, SW_SWAP_FAILURE, TON_DERIVATION_PATH
-from .apps import cal as cal
+from apps.ton import DEVICE_PUBLIC_KEY, Bounceability, WorkchainID, craft_address, SW_SWAP_FAILURE, TON_DERIVATION_PATH
+from apps import cal as cal
 
 
 # ExchangeTestRunner implementation for Ton

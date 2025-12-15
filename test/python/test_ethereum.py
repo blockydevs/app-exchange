@@ -6,11 +6,11 @@ from ragger.error import ExceptionRAPDU
 
 from exchange_client.client import PayinExtraDataID
 from exchange_client.test_runner import ExchangeTestRunner, ALL_TESTS_EXCEPT_MEMO, ALL_TESTS_EXCEPT_MEMO_AND_THORSWAP
-from .apps.ethereum import ETH_PATH
+from apps.ethereum import ETH_PATH
 from ledger_app_clients.ethereum.client import EthAppClient
 from ledger_app_clients.ethereum.dynamic_networks import DynamicNetwork
 
-from .apps import cal as cal
+from apps import cal as cal
 from hashlib import sha256
 
 contract_1 = bytes.fromhex("088890dc\

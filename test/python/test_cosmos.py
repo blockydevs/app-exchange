@@ -1,8 +1,8 @@
 import pytest
 
 from exchange_client.test_runner import ExchangeTestRunner, ALL_TESTS_EXCEPT_MEMO_THORSWAP_AND_FEES, VALID_TESTS_EXCEPT_THORSWAP, ALL_TESTS_EXCEPT_THORSWAP
-from .apps.cosmos import CosmosClient, Errors
-from .apps import cal as cal
+from apps.cosmos import CosmosClient, Errors
+from apps import cal as cal
 
 # ExchangeTestRunner implementation for Cosmos
 class CosmosTests(ExchangeTestRunner):

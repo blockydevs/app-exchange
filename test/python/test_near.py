@@ -1,8 +1,8 @@
 import pytest
 
 from exchange_client.test_runner import ExchangeTestRunner, ALL_TESTS_EXCEPT_MEMO_AND_FEES, ALL_TESTS_EXCEPT_MEMO_THORSWAP_AND_FEES
-from .apps.near import  NearClient, NearErrors
-from .apps import cal as cal
+from apps.near import  NearClient, NearErrors
+from apps import cal as cal
 
 # ExchangeTestRunner implementation for Near
 class NearTests(ExchangeTestRunner):

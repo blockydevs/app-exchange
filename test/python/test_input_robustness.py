@@ -7,8 +7,8 @@ from exchange_client.signing_authority import SigningAuthority, LEDGER_SIGNER
 from exchange_client.cal_helper import sign_currency_conf
 from exchange_client.ethereum import get_sub_config
 from exchange_client.ethereum import create_currency_config as create_eth_currency_config
-from .apps.tezos import encode_address
-from .apps import cal as cal
+from apps.tezos import encode_address
+from apps import cal as cal
 
 CURRENCY_FROM = cal.XLM_CURRENCY_CONFIGURATION
 CURRENCY_TO = cal.ETH_CURRENCY_CONFIGURATION

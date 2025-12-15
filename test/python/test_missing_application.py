@@ -6,8 +6,8 @@ from ragger.error import ExceptionRAPDU
 from exchange_client.client import ExchangeClient, Rate, SubCommand, Errors, Command, P2_EXTEND, P2_MORE, EXCHANGE_CLASS
 from exchange_client.transaction_builder import get_partner_curve, LEGACY_SUBCOMMANDS, ALL_SUBCOMMANDS, NEW_SUBCOMMANDS, get_credentials, craft_and_sign_tx
 from exchange_client.signing_authority import SigningAuthority, LEDGER_SIGNER
-from .apps import cal as cal
-from .apps.ethereum import ETC_PACKED_DERIVATION_PATH
+from apps import cal as cal
+from apps.ethereum import ETC_PACKED_DERIVATION_PATH
 
 # This does not exist
 CURRENCY_TO = cal.CurrencyConfiguration(ticker="PSM",

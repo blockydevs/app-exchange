@@ -1,8 +1,8 @@
 import pytest
 
 from exchange_client.test_runner import ExchangeTestRunner, SWAP_TESTS_EXCEPT_THORSWAP
-from .apps.xrp import XRPClient, DEFAULT_PATH, XRP_PACKED_DERIVATION_PATH, RippleErrors
-from .apps import cal as cal
+from apps.xrp import XRPClient, DEFAULT_PATH, XRP_PACKED_DERIVATION_PATH, RippleErrors
+from apps import cal as cal
 
 # ExchangeTestRunner implementation for Stellar
 class RippleTests(ExchangeTestRunner):
