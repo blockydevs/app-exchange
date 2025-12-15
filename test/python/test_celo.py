@@ -1,6 +1,6 @@
 import pytest
 
-from ledger_app_clients.exchange.test_runner import ExchangeTestRunner, ALL_TESTS_EXCEPT_THORSWAP
+from exchange_client.test_runner import ExchangeTestRunner, ALL_TESTS_EXCEPT_THORSWAP
 from .apps.celo import Errors, CELO_PATH
 from ledger_app_clients.ethereum.client import EthAppClient
 from .apps import cal as cal

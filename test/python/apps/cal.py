@@ -1,9 +1,9 @@
-from ledger_app_clients.exchange.cal_helper import CurrencyConfiguration
+from exchange_client.cal_helper import CurrencyConfiguration
 
 from .sui_utils import SUI_CONF, SUI_PACKED_DERIVATION_PATH, SUI_USDC_CONF
 
 # Eth family
-from ledger_app_clients.exchange.ethereum import ETH_PACKED_DERIVATION_PATH, ETH_CONF
+from exchange_client.ethereum import ETH_PACKED_DERIVATION_PATH, ETH_CONF
 from .ethereum import MON_PACKED_DERIVATION_PATH, MON_CONF
 from .ethereum import ETC_PACKED_DERIVATION_PATH, ETC_CONF
 from .ethereum import BSC_PACKED_DERIVATION_PATH, BSC_CONF

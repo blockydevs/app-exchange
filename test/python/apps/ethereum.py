@@ -1,7 +1,7 @@
 from ragger.bip import pack_derivation_path
 
-from ledger_app_clients.exchange.ethereum import get_sub_config, create_currency_config
-from ledger_app_clients.exchange.ethereum import ETH_PATH
+from exchange_client.ethereum import get_sub_config, create_currency_config
+from exchange_client.ethereum import ETH_PATH
 
 # Monad (MON) configuration
 MON_CONF = create_currency_config("MON", "Ethereum", get_sub_config("MON", 18, 143, "MON", 18))
