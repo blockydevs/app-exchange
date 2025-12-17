@@ -3,9 +3,9 @@ import copy
 
 from cryptography.hazmat.primitives.asymmetric import ec
 
-from ledger_app_clients.exchange.client import ExchangeClient, Rate, SubCommand
-from ledger_app_clients.exchange.transaction_builder import SWAP_NG_SPECS, SELL_NG_SPECS, FUND_NG_SPECS, get_partner_curve, get_credentials, craft_and_sign_tx, SignatureComputation, SignatureEncoding, PayloadEncoding
-from ledger_app_clients.exchange.signing_authority import SigningAuthority, LEDGER_SIGNER
+from exchange_client.client import ExchangeClient, Rate, SubCommand
+from exchange_client.transaction_builder import SWAP_NG_SPECS, SELL_NG_SPECS, FUND_NG_SPECS, get_partner_curve, get_credentials, craft_and_sign_tx, SignatureComputation, SignatureEncoding, PayloadEncoding
+from exchange_client.signing_authority import SigningAuthority, LEDGER_SIGNER
 
 # Some valid infos for TX. Content is irrelevant for the test
 

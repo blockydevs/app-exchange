@@ -4,7 +4,7 @@ from pathlib import Path
 
 from ragger.conftest import configuration
 
-from ledger_app_clients.exchange.navigation_helper import ExchangeNavigationHelper
+from exchange_client.navigation_helper import ExchangeNavigationHelper
 
 ###########################
 ### CONFIGURATION START ###

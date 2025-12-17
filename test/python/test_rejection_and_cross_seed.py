@@ -3,12 +3,12 @@ import pytest
 from ragger.utils import RAPDU, prefix_with_len, create_currency_config
 from ragger.error import ExceptionRAPDU
 
-from ledger_app_clients.exchange.client import ExchangeClient, Rate, SubCommand, Errors, Command, P2_EXTEND, P2_MORE, EXCHANGE_CLASS
-from ledger_app_clients.exchange.transaction_builder import get_partner_curve, LEGACY_SUBCOMMANDS, ALL_SUBCOMMANDS, NEW_SUBCOMMANDS, get_credentials, craft_and_sign_tx
-from ledger_app_clients.exchange.signing_authority import SigningAuthority, LEDGER_SIGNER
-from ledger_app_clients.exchange.utils import handle_lib_call_start_or_stop
-from .apps import cal as cal
-from .apps.ethereum import ETC_PACKED_DERIVATION_PATH, ETH_PATH
+from exchange_client.client import ExchangeClient, Rate, SubCommand, Errors, Command, P2_EXTEND, P2_MORE, EXCHANGE_CLASS
+from exchange_client.transaction_builder import get_partner_curve, LEGACY_SUBCOMMANDS, ALL_SUBCOMMANDS, NEW_SUBCOMMANDS, get_credentials, craft_and_sign_tx
+from exchange_client.signing_authority import SigningAuthority, LEDGER_SIGNER
+from exchange_client.utils import handle_lib_call_start_or_stop
+from apps import cal as cal
+from apps.ethereum import ETC_PACKED_DERIVATION_PATH, ETH_PATH
 from ledger_app_clients.ethereum.client import EthAppClient
 
 CURRENCY_FROM = cal.ETH_CURRENCY_CONFIGURATION
@@ -112,7 +112,7 @@ class TestRejection:
         assert e.value.status == Errors.UNEXPECTED_INSTRUCTION
 
     def test_cross_seed_accept_then_reject(self, backend, exchange_navigation_helper):
-        if backend.firmware.is_nano:
+        if backend.device.is_nano:
             pytest.skip("No warning on Nano devices")
         ex = ExchangeClient(backend, Rate.FIXED, SubCommand.SWAP_NG)
         self._prepare_swap(ex, exchange_navigation_helper, SubCommand.SWAP_NG, fake_payout_address=b'bc1qqtl9jlrwcr3fsfcjj2du7pu6fcgaxl5dsw2vyg0000')
@@ -138,7 +138,7 @@ class TestRejection:
         # Request the final address check and UI approval request on the device
         with ex.prompt_ui_display():
             exchange_navigation_helper.cross_seed_accept()
-            if not backend.firmware.is_nano:
+            if not backend.device.is_nano:
                 # On Nano devices we have only one review
                 exchange_navigation_helper.simple_accept()
 

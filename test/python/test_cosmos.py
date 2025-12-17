@@ -1,8 +1,8 @@
 import pytest
 
-from ledger_app_clients.exchange.test_runner import ExchangeTestRunner, ALL_TESTS_EXCEPT_MEMO_THORSWAP_AND_FEES, VALID_TESTS_EXCEPT_THORSWAP, ALL_TESTS_EXCEPT_THORSWAP
-from .apps.cosmos import CosmosClient, Errors
-from .apps import cal as cal
+from exchange_client.test_runner import ExchangeTestRunner, ALL_TESTS_EXCEPT_MEMO_THORSWAP_AND_FEES, VALID_TESTS_EXCEPT_THORSWAP, ALL_TESTS_EXCEPT_THORSWAP
+from apps.cosmos import CosmosClient, Errors
+from apps import cal as cal
 
 # ExchangeTestRunner implementation for Cosmos
 class CosmosTests(ExchangeTestRunner):
@@ -32,6 +32,4 @@ class TestsCosmos:
 
     @pytest.mark.parametrize('test_to_run', ALL_TESTS_EXCEPT_THORSWAP)
     def test_cosmos(self, backend, exchange_navigation_helper, test_to_run):
-        if backend.firmware.device == "nanos":
-            pytest.skip("Cosmos swap is not supported on NanoS device")
         CosmosTests(backend, exchange_navigation_helper).run_test(test_to_run)

@@ -1,14 +1,14 @@
 from ragger.utils import RAPDU, prefix_with_len, create_currency_config
 from ragger.backend import RaisePolicy
 
-from ledger_app_clients.exchange.client import ExchangeClient, Rate, SubCommand, Errors, Command
-from ledger_app_clients.exchange.transaction_builder import get_partner_curve, craft_and_sign_tx
-from ledger_app_clients.exchange.signing_authority import SigningAuthority, LEDGER_SIGNER
-from ledger_app_clients.exchange.cal_helper import sign_currency_conf
-from ledger_app_clients.exchange.ethereum import get_sub_config
-from ledger_app_clients.exchange.ethereum import create_currency_config as create_eth_currency_config
-from .apps.tezos import encode_address
-from .apps import cal as cal
+from exchange_client.client import ExchangeClient, Rate, SubCommand, Errors, Command
+from exchange_client.transaction_builder import get_partner_curve, craft_and_sign_tx
+from exchange_client.signing_authority import SigningAuthority, LEDGER_SIGNER
+from exchange_client.cal_helper import sign_currency_conf
+from exchange_client.ethereum import get_sub_config
+from exchange_client.ethereum import create_currency_config as create_eth_currency_config
+from apps.tezos import encode_address
+from apps import cal as cal
 
 CURRENCY_FROM = cal.XLM_CURRENCY_CONFIGURATION
 CURRENCY_TO = cal.ETH_CURRENCY_CONFIGURATION

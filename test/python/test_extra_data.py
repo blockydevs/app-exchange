@@ -4,12 +4,12 @@ from ragger.utils import prefix_with_len
 from ragger.error import ExceptionRAPDU
 from typing import Optional
 
-from ledger_app_clients.exchange.client import ExchangeClient, Rate, SubCommand, Errors
-from .apps.litecoin import LitecoinClient
+from exchange_client.client import ExchangeClient, Rate, SubCommand, Errors
+from apps.litecoin import LitecoinClient
 
-from ledger_app_clients.exchange.signing_authority import SigningAuthority, LEDGER_SIGNER
-from ledger_app_clients.exchange.transaction_builder import get_partner_curve, craft_and_sign_tx, ALL_SUBCOMMANDS, get_credentials
-from .apps import cal as cal
+from exchange_client.signing_authority import SigningAuthority, LEDGER_SIGNER
+from exchange_client.transaction_builder import get_partner_curve, craft_and_sign_tx, ALL_SUBCOMMANDS, get_credentials
+from apps import cal as cal
 
 CURRENCY_FROM = cal.BTC_CURRENCY_CONFIGURATION
 CURRENCY_TO = cal.ETH_CURRENCY_CONFIGURATION
@@ -57,7 +57,7 @@ class TestExtraData:
                     payin_extra_data=bytes.fromhex("00"),
                     valid=True),
     ])
-    def test_extra_data_and_or_extra_id(self, backend, configurations, firmware):
+    def test_extra_data_and_or_extra_id(self, backend, configurations):
         ex = ExchangeClient(backend, Rate.FIXED, SubCommand.SWAP_NG)
         partner = SigningAuthority(curve=get_partner_curve(SubCommand.SWAP_NG), name="Default name")
 
@@ -84,10 +84,6 @@ class TestExtraData:
         fees = 339
 
         tx, _ = craft_and_sign_tx(SubCommand.SWAP_NG, tx_infos, transaction_id, fees, partner)
-
-        # NanoS does not support payin_extra_data
-        if firmware.device == "nanos" and configurations.payin_extra_id is None and configurations.payin_extra_data == bytes.fromhex("01000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F"):
-            configurations.valid = False
 
         if configurations.valid:
             ex.process_transaction(tx)

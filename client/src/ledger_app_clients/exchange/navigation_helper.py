@@ -25,7 +25,7 @@ class ExchangeNavigationHelper:
         self._test_name_suffix = suffix
 
     def _navigate_and_compare(self, accept: bool):
-        if self._backend.firmware.is_nano:
+        if self._backend.device.is_nano:
             navigate_instruction = NavInsID.RIGHT_CLICK
             validation_instructions = [NavInsID.BOTH_CLICK]
             text = "Sign transaction" if accept else "Reject transaction"
@@ -49,7 +49,7 @@ class ExchangeNavigationHelper:
                                                         screen_change_after_last_instruction=screen_change_after_last_instruction)
 
     def _cross_seed_navigate_and_compare(self, accept: bool):
-        if self._backend.firmware.is_nano:
+        if self._backend.device.is_nano:
             text = "Sign transaction" if accept else "Reject transaction"
             navigate_instruction = NavInsID.RIGHT_CLICK
             validation_instructions = [NavInsID.BOTH_CLICK]
@@ -85,11 +85,11 @@ class ExchangeNavigationHelper:
         self._cross_seed_navigate_and_compare(False)
 
     def wait_for_exchange_spinner(self):
-        if not self._backend.firmware.is_nano:
+        if not self._backend.device.is_nano:
             self._backend.wait_for_text_on_screen("Processing")
 
     def wait_for_library_spinner(self):
-        if self._backend.firmware.is_nano:
+        if self._backend.device.is_nano:
             # Handle applications that do not yet have the Signing spinner on Nano
             sleep(1)
         else:
@@ -99,7 +99,7 @@ class ExchangeNavigationHelper:
         # Wait for the end of the lib app spinner
         self._backend.wait_for_text_not_on_screen("Signing")
         # We should now be back in exchange with a success or failure modal, check it and dismiss it
-        if self._backend.firmware.is_nano:
+        if self._backend.device.is_nano:
             validation_instructions = [NavInsID.BOTH_CLICK]
         else:
             validation_instructions = [NavInsID.USE_CASE_STATUS_DISMISS]

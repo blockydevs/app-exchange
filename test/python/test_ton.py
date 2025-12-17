@@ -2,10 +2,10 @@
 import pytest
 import os
 
-from .apps.ton_application_client.ton_transaction import Transaction, SendMode, CommentPayload, Payload, JettonTransferPayload, NFTTransferPayload, CustomUnsafePayload, JettonBurnPayload, AddWhitelistPayload, SingleNominatorWithdrawPayload, ChangeValidatorPayload, TonstakersDepositPayload, JettonDAOVotePayload, ChangeDNSWalletPayload, ChangeDNSPayload, TokenBridgePaySwapPayload
-from .apps.ton_application_client.ton_command_sender import BoilerplateCommandSender, Errors
-from .apps.ton_application_client.ton_response_unpacker import unpack_sign_tx_response
-from .apps.ton_utils import check_signature_validity
+from apps.ton_application_client.ton_transaction import Transaction, SendMode, CommentPayload, Payload, JettonTransferPayload, NFTTransferPayload, CustomUnsafePayload, JettonBurnPayload, AddWhitelistPayload, SingleNominatorWithdrawPayload, ChangeValidatorPayload, TonstakersDepositPayload, JettonDAOVotePayload, ChangeDNSWalletPayload, ChangeDNSPayload, TokenBridgePaySwapPayload
+from apps.ton_application_client.ton_command_sender import BoilerplateCommandSender, Errors
+from apps.ton_application_client.ton_response_unpacker import unpack_sign_tx_response
+from apps.ton_utils import check_signature_validity
 
 # XXX:
 #   tonsdk seems not te be maintained anymore, python package describe by official TON documentation
@@ -13,9 +13,9 @@ from .apps.ton_utils import check_signature_validity
 #   tonsdk.boc.Cell cannot handle exotic cell but this is required in order to compute jetton wallet address.
 from pytoniq_core import Address, Cell, begin_cell
 
-from ledger_app_clients.exchange.test_runner import ExchangeTestRunner, ALL_TESTS_EXCEPT_MEMO_THORSWAP_AND_FEES
-from .apps.ton import DEVICE_PUBLIC_KEY, Bounceability, WorkchainID, craft_address, SW_SWAP_FAILURE, TON_DERIVATION_PATH
-from .apps import cal as cal
+from exchange_client.test_runner import ExchangeTestRunner, ALL_TESTS_EXCEPT_MEMO_THORSWAP_AND_FEES
+from apps.ton import DEVICE_PUBLIC_KEY, Bounceability, WorkchainID, craft_address, SW_SWAP_FAILURE, TON_DERIVATION_PATH
+from apps import cal as cal
 
 
 # ExchangeTestRunner implementation for Ton
@@ -150,12 +150,8 @@ class TestsTon:
     # Paremetrize the test_ton function with all the ExchangeTestRunner tests to run
     @pytest.mark.parametrize('test_to_run', ALL_TESTS_EXCEPT_MEMO_THORSWAP_AND_FEES)
     def test_ton(self, backend, exchange_navigation_helper, test_to_run):
-        if backend.firmware.device == "nanos":
-            pytest.skip("Ton swap is not supported on NanoS device")
         TonTests(backend, exchange_navigation_helper).run_test(test_to_run)
 
     @pytest.mark.parametrize('test_to_run', ALL_TESTS_EXCEPT_MEMO_THORSWAP_AND_FEES)
     def test_ton_usdt(self, backend, exchange_navigation_helper, test_to_run):
-        if backend.firmware.device == "nanos":
-            pytest.skip("Ton swap is not supported on NanoS device")
         TonUSDTTests(backend, exchange_navigation_helper).run_test(test_to_run)

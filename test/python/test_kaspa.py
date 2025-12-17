@@ -1,11 +1,11 @@
 import pytest
-from ledger_app_clients.exchange.test_runner  import ExchangeTestRunner, ALL_TESTS_EXCEPT_MEMO_AND_THORSWAP
-from .apps import cal as cal
+from exchange_client.test_runner  import ExchangeTestRunner, ALL_TESTS_EXCEPT_MEMO_AND_THORSWAP
+from apps import cal as cal
 
-from .apps.kaspa import KAS_PATH, check_signature_validity
-from .apps.kaspa_application_client.kaspa_command_sender import KaspaCommandSender, Errors as KaspaErrors, InsType, P1, P2
-from .apps.kaspa_application_client.kaspa_response_unpacker import unpack_get_public_key_response, unpack_sign_tx_response
-from .apps.kaspa_application_client.kaspa_transaction import Transaction, TransactionInput, TransactionOutput
+from apps.kaspa import KAS_PATH, check_signature_validity
+from apps.kaspa_application_client.kaspa_command_sender import KaspaCommandSender, Errors as KaspaErrors, InsType, P1, P2
+from apps.kaspa_application_client.kaspa_response_unpacker import unpack_get_public_key_response, unpack_sign_tx_response
+from apps.kaspa_application_client.kaspa_transaction import Transaction, TransactionInput, TransactionOutput
 
 # ExchangeTestRunner implementation for Near
 class KaspaTests(ExchangeTestRunner):

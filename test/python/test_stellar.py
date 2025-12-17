@@ -1,8 +1,8 @@
 import pytest
 
-from ledger_app_clients.exchange.test_runner import ExchangeTestRunner, ALL_TESTS_EXCEPT_THORSWAP
-from .apps.stellar import Network, StellarClient, StellarErrors
-from .apps import cal as cal
+from exchange_client.test_runner import ExchangeTestRunner, ALL_TESTS_EXCEPT_THORSWAP
+from apps.stellar import Network, StellarClient, StellarErrors
+from apps import cal as cal
 
 # ExchangeTestRunner implementation for Stellar
 class StellarTests(ExchangeTestRunner):

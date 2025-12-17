@@ -1,6 +1,5 @@
-import importlib.resources
+from pathlib import Path
 
-import os
 import hashlib
 from ecdsa import SigningKey
 from ecdsa.util import sigencode_der
@@ -13,8 +12,9 @@ class KeySigner:
 
         :param pem_name: Name of the PEM file (e.g., 'trusted_name.pem')
         """
+        parent = Path(__file__).parent.resolve()
         try:
-            with importlib.resources.open_text("ledger_app_clients.exchange.pki", pem_name) as pem_file:
+            with open(parent / pem_name, encoding="utf-8") as pem_file:
                 self._signing_key = SigningKey.from_pem(pem_file.read(), hashlib.sha256)
         except FileNotFoundError:
             raise FileNotFoundError(f"PEM file not found in package: {pem_name}")
