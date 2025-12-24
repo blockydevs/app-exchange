@@ -49,6 +49,22 @@ jobs:
           path: ./docs/deps/ledger-secure-sdk
           fetch-depth: 1
 
+      - name: Checkout rust boilerplate
+        uses: actions/checkout@v4
+        with:
+          repository: LedgerHQ/app-boilerplate-rust
+          ref: main
+          path: ./docs/deps/app-boilerplate-rust
+          fetch-depth: 1
+
+      - name: Checkout rust sdk
+        uses: actions/checkout@v4
+        with:
+          repository: LedgerHQ/ledger-device-rust-sdk
+          ref: master
+          path: ./docs/deps/ledger-device-rust-sdk
+          fetch-depth: 1
+
       - name: Install requirements
         run: pip install -r docs/requirements.txt
 

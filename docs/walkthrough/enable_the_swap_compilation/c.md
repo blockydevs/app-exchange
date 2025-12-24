@@ -21,9 +21,9 @@ ld.lld: error: undefined symbol: swap_handle_get_printable_amount
 ld.lld: error: undefined symbol: swap_handle_check_address
 >>> referenced by main.c
 >>>               build/nanox/obj/sdk/lib_standard_app/main.o:(library_app_main)
-``` 
+```
 
-These errors are caused by the missing handler definitions. For more information about what the handlers do, refer to the [handler documentation](../technical_information/coin_application_api/index.md).
+These errors are caused by the missing handler definitions. For more information about what the handlers do, refer to the [handler documentation](../../technical_information/coin_application_api/index.md).
 
 ## Fix compilation errors if any
 
