@@ -11,6 +11,11 @@ APP_BOILERPLATE_DIR = base / "app-boilerplate/"
 LEDGER_SDK_URL = "git@github.com:LedgerHQ/ledger-secure-sdk.git"
 LEDGER_SDK_CLONE_DIR = base / "ledger-secure-sdk/"
 
+APP_BOILERPLATE_RUST_URL = "git@github.com:LedgerHQ/app-boilerplate-rust.git"
+APP_BOILERPLATE_RUST_DIR = base / "app-boilerplate-rust/"
+LEDGER_RUST_SDK_URL = "git@github.com:LedgerHQ/ledger-device-rust-sdk.git"
+LEDGER_RUST_SDK_CLONE_DIR = base / "ledger-device-rust-sdk/"
+
 def run_cmd(cmd: str,
             cwd: Path = Path('.'),
             print_output: bool = False,
@@ -35,7 +40,7 @@ def run_cmd(cmd: str,
 
     return ret.stdout.strip()
 
-def clone_or_pull(repo_url: str, clone_dir: str):
+def clone_or_pull(repo_url: str, clone_dir: str, branch):
     # Only needed when cloning / pulling, not when building.
     # By putting the import here we allow the script to be imported inside the docker image
     from git import Repo
@@ -49,13 +54,15 @@ def clone_or_pull(repo_url: str, clone_dir: str):
         repo = Repo(clone_dir)
         origin = repo.remotes.origin
         origin.fetch()
-        repo.git.reset('--hard', 'origin/master')
+        repo.git.reset('--hard', f'origin/{branch}')
 
         # Update submodules
         print(f"Updating submodules in {clone_dir}")
         run_cmd("git submodule sync", cwd=Path(clone_dir))
         run_cmd("git submodule update --init --recursive", cwd=Path(clone_dir))
 
-clone_or_pull(APP_SOLANA_URL, APP_SOLANA_CLONE_DIR)
-clone_or_pull(APP_BOILERPLATE_URL, APP_BOILERPLATE_DIR)
-clone_or_pull(LEDGER_SDK_URL, LEDGER_SDK_CLONE_DIR)
+clone_or_pull(APP_SOLANA_URL, APP_SOLANA_CLONE_DIR, "develop")
+clone_or_pull(APP_BOILERPLATE_URL, APP_BOILERPLATE_DIR, "master")
+clone_or_pull(LEDGER_SDK_URL, LEDGER_SDK_CLONE_DIR, "master")
+clone_or_pull(APP_BOILERPLATE_RUST_URL, APP_BOILERPLATE_RUST_DIR, "main")
+clone_or_pull(LEDGER_RUST_SDK_URL, LEDGER_RUST_SDK_CLONE_DIR, "master")

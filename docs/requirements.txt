@@ -3,3 +3,5 @@ pymdown-extensions
 mkdocs-material
 mkdocs-mermaid2-plugin
 GitPython
+# Workaround for auto mkdocs reload failure
+click==8.2.1
