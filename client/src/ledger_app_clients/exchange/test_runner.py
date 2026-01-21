@@ -487,6 +487,7 @@ SWAP_TESTS = [test for test in ALL_TESTS if "swap" in test]
 FUND_TESTS = [test for test in ALL_TESTS if "fund" in test]
 SELL_TESTS = [test for test in ALL_TESTS if "sell" in test]
 VALID_TESTS = [test for test in ALL_TESTS if "valid" in test]
+THORSWAP_TESTS = [test for test in ALL_TESTS if "thorswap" in test]
 
 def common_part(a, b) -> List:
     a_set = set(a)
