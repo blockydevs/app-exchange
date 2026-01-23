@@ -211,12 +211,29 @@ static bool check_extra_id_extra_data(subcommand_e subcommand) {
             return false;
 #endif
 
-            // Size has to be header + 32 bytes hash
-            if (extra->size != 33) {
-                PRINTF("Error: incorrect payin_extra_data size %d != 33; payin_extra_data = %.*H\n",
-                       extra->size,
-                       extra->size,
-                       extra->bytes);
+            // Check size based on the header byte (first byte indicates the type)
+            // 0x00: NATIVE, 0x01: EVM_CALLDATA (32 bytes), 0x02: OP_RETURN (32 bytes), 0x03:
+            // SOL_TEMPLATE (8 bytes)
+            uint8_t extra_data_type = extra->bytes[0];
+            size_t expected_size;
+
+            if (extra_data_type == 0x03) {
+                // SOL_TEMPLATE: header + 8 bytes
+                expected_size = 9;
+            } else {
+                // Standard templates: header + 32 bytes
+                expected_size = 33;
+            }
+
+            if (extra->size != expected_size) {
+                PRINTF(
+                    "Error: incorrect payin_extra_data size %d != %d for type 0x%02X; "
+                    "payin_extra_data = %.*H\n",
+                    extra->size,
+                    expected_size,
+                    extra_data_type,
+                    extra->size,
+                    extra->bytes);
                 return false;
             }
         }

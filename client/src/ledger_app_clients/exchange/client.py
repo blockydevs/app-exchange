@@ -82,6 +82,7 @@ class PayinExtraDataID(IntEnum):
     NATIVE = 0x00
     EVM_CALLDATA = 0x01
     OP_RETURN = 0x02
+    SOL_TEMPLATE = 0x03
 
 EXCHANGE_CLASS = 0xE0
 
