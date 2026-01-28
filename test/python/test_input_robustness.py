@@ -10,7 +10,7 @@ from exchange_client.ethereum import create_currency_config as create_eth_curren
 from apps.tezos import encode_address
 from apps import cal as cal
 
-CURRENCY_FROM = cal.XLM_CURRENCY_CONFIGURATION
+CURRENCY_FROM = cal.ETH_CURRENCY_CONFIGURATION
 CURRENCY_TO = cal.ETH_CURRENCY_CONFIGURATION
 
 class TestRobustnessSET_PARTNER_KEY:
@@ -167,8 +167,8 @@ class TestRobustnessCHECK_ADDRESS:
             create_eth_currency_config("Eth", "Ethereum", get_sub_config("ETH", 18, 1, "ETH", 18)),
         )
         refund_currency_conf_to_test = (
-            create_currency_config("xlm", "Stellar"),
-            create_currency_config("xLm", "Stellar"),
+            create_eth_currency_config("eth", "Ethereum", get_sub_config("ETH", 18, 1, "ETH", 18)),
+            create_eth_currency_config("eTh", "Ethereum", get_sub_config("ETH", 18, 1, "ETH", 18)),
         )
 
         for payout_conf in payout_currency_conf_to_test:
@@ -182,7 +182,7 @@ class TestRobustnessCHECK_ADDRESS:
                 backend.raise_policy = RaisePolicy.RAISE_NOTHING
                 rapdu = ex._exchange(Command.CHECK_REFUND_ADDRESS_AND_DISPLAY, payload=refund_payload)
                 # The address is false on purpose to prevent from having to handle the UI
-                # What we want to test is before the actual address check by Stellar
+                # What we want to test is before the actual address check by Ethereum
                 assert rapdu.status == Errors.INVALID_ADDRESS
 
     def test_currency_normalization_incorrect(self, backend):
@@ -208,14 +208,14 @@ def test_currency_normalization_fund(backend, exchange_navigation_helper):
     tx_infos = {
         "user_id": "Jon Wick",
         "account_name": "My account 00",
-        "in_currency": "XLM",
+        "in_currency": "ETH",
         "in_amount": int.to_bytes(10000000, length=4, byteorder='big'),
         "in_address": "GB5ZQJYKSZP3JOMOCWCBI7SPQUBW6ZL3642FUB7IYNAOC2EQMAFXI3P2",
     }
     fees = 100
     currency_conf_to_test = (
-        create_currency_config("xlm", "Stellar"),
-        create_currency_config("xLm", "Stellar"),
+        create_eth_currency_config("eth", "Ethereum", get_sub_config("ETH", 18, 1, "ETH", 18)),
+        create_eth_currency_config("eTh", "Ethereum", get_sub_config("ETH", 18, 1, "ETH", 18)),
     )
 
     for conf in currency_conf_to_test:
