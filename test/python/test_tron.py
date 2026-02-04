@@ -18,6 +18,7 @@ class TronTests(ExchangeTestRunner):
     valid_refund_memo = ""
     valid_send_amount_1 = 1000000
     valid_send_amount_2 = 446739662
+    valid_send_amount_3 = 1916012345678901234567890 # 1_916_012.34 * 10^18
     valid_fees_1 = 0
     valid_fees_2 = 1
     fake_refund = "abcdabcd"
@@ -88,6 +89,31 @@ class TestsUsdc:
     @pytest.mark.parametrize('test_to_run', ALL_TESTS_EXCEPT_THORSWAP_AND_FEES)
     def test_tron_usdc(self, backend, exchange_navigation_helper, test_to_run):
         TronUsdcTests(backend, exchange_navigation_helper).run_test(test_to_run)
+
+
+###################################################
+# ExchangeTestRunner implementation for Tron TUSD #
+###################################################
+class TronTusdTests(TronTests):
+    currency_configuration = cal.TUSD_CURRENCY_CONFIGURATION
+
+    def perform_final_tx(self, destination, send_amount, fees, memo):
+        TronClient(self.backend).send_tx(path="m/44'/148'/0'",
+                                         memo=memo,
+                                         destination=destination,
+                                         send_amount=send_amount,
+                                         token="TUSD")
+
+class TestsTusd:
+    @pytest.mark.parametrize('test_to_run', ALL_TESTS_EXCEPT_THORSWAP_AND_FEES)
+    def test_tron_tusd(self, backend, exchange_navigation_helper, test_to_run):
+        TronTusdTests(backend, exchange_navigation_helper).run_test(test_to_run)
+
+    @pytest.mark.parametrize('test_to_run', ['swap_valid_1'])
+    def test_tron_tusd_big_amount(self, backend, exchange_navigation_helper, test_to_run):
+        test_instance = TronTusdTests(backend, exchange_navigation_helper)
+        test_instance.valid_send_amount_1 = test_instance.valid_send_amount_3
+        test_instance.run_test(test_to_run)
 
 
 #####################################################################
