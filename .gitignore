@@ -29,6 +29,8 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 .vs/
 
+.idea/
+
 build/
 bin/
 debug/
